@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:validation/confirmation_screen.dart';
 
 class ValidationScreen extends StatefulWidget {
   const ValidationScreen({super.key});
@@ -65,7 +66,6 @@ class _ValidationScreenState extends State<ValidationScreen> {
     if (password.length < 6) {
       return "Must be at least 6 characters.";
     }
-    if (_passwordController == _repeatPasswordController)
     return null;
   }
 
@@ -114,7 +114,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
           spacing: 40,
           children: [
             Center(
-              child: Text("Neuer Account", style: TextStyle(fontSize: 36),),
+              child: Text("Create a new account", style: TextStyle(fontSize: 36),),
             ),
             Column(
               spacing: 12,
@@ -170,13 +170,24 @@ class _ValidationScreenState extends State<ValidationScreen> {
               ],
             ),
             FilledButton(
-              onPressed: () {
-
-              }, 
+              onPressed: (validateUsername(_usernameController.text) == null &&
+                          validateEmail(_emailController.text) == null &&
+                          validatePassword(_passwordController.text) == null &&
+                          validateRepeatPassword(_repeatPasswordController.text) == null)
+                  ? () {
+                      Navigator.push(context, MaterialPageRoute(builder: (ctx) => ConfirmationScreen())); 
+                    }
+                  : null, 
               style: FilledButton.styleFrom(
-                backgroundColor: Color.fromRGBO(47, 93, 1, 1)
+                backgroundColor: (validateUsername(_usernameController.text) == null &&
+                                  validateEmail(_emailController.text) == null &&
+                                  validatePassword(_passwordController.text) == null &&
+                                  validateRepeatPassword(_repeatPasswordController.text) == null)
+                    ? const Color.fromRGBO(47, 93, 1, 1)
+                    : Colors.grey,
               ),
-              child: Text("Registrieren"))
+              child: const Text("Register"),
+            )
           ],
         ),
       ),
