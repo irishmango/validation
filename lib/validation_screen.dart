@@ -32,20 +32,6 @@ class _ValidationScreenState extends State<ValidationScreen> {
       return "No spaces allowed.";
     }
 
-    if (!RegExp(r'^[A-Za-z]').hasMatch(userInput)) {
-      return "Must start with a letter";
-    }
-
-    if (RegExp(r'[äöüÄÖÜß]').hasMatch(userInput)) {
-      return "Umlauts not allowed.";
-    }
-
-    if (RegExp(
-      r'[\u203C-\u3299\uD83C\uD000-\uDFFF\uD83D\uD000-\uDFFF\uD83E\uD000-\uDFFF]'
-    ).hasMatch(userInput)) {
-      return "No emojis allowed";
-    }
-
     return null;
   }
 
@@ -65,6 +51,17 @@ class _ValidationScreenState extends State<ValidationScreen> {
       }
     if (password.length < 6) {
       return "Must be at least 6 characters.";
+    }
+
+    bool hasDigit = false;
+
+    for (int i = 0; i < password.length; i++) {
+      if ('0123456789'.contains(password[i])) {
+        hasDigit = true;
+      }
+    }
+    if (!hasDigit) {
+      return "Password must contain a number";
     }
     return null;
   }
