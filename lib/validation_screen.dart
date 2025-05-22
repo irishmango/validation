@@ -51,7 +51,9 @@ class _ValidationScreenState extends State<ValidationScreen> {
       if (!_passwordFocus.hasFocus) setState(() => _passwordTouched = true);
     });
     _repeatPasswordFocus.addListener(() {
-      if (!_repeatPasswordFocus.hasFocus) setState(() => _repeatPasswordTouched = true);
+      if (_repeatPasswordFocus.hasFocus) {
+        setState(() => _repeatPasswordTouched = true);
+      }
     });
 
     _usernameController.addListener(_updateFormValidity);
@@ -218,11 +220,15 @@ class _ValidationScreenState extends State<ValidationScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
+                  
                   AnimatedBuilder(
                     animation: _passwordController,
-                    builder: (context, _) => PasswordRequirements(
-                      password: _passwordController.text,
-                    ),
+                    builder: (context, _) {
+                      final password = _passwordController.text;
+                      return validatePassword(password) == null
+                          ? const SizedBox.shrink()
+                          : PasswordRequirements(password: password);
+                    },
                   ),
                   SizedBox(height: 12),
                   TextFormField(
