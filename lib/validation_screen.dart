@@ -64,10 +64,10 @@ class _ValidationScreenState extends State<ValidationScreen> {
 
   @override
   void dispose() {
-    _usernameFocus.dispose();
-    _emailFocus.dispose();
-    _passwordFocus.dispose();
-    _repeatPasswordFocus.dispose();
+    // _usernameFocus.dispose();
+    // _emailFocus.dispose();
+    // _passwordFocus.dispose();
+    // _repeatPasswordFocus.dispose();
 
     _usernameController.dispose();
     _emailController.dispose();
@@ -180,7 +180,6 @@ class _ValidationScreenState extends State<ValidationScreen> {
                   TextFormField(
                     focusNode: _usernameFocus,
                     controller: _usernameController,
-                    onChanged: (_) => _updateFormValidity(),
                     autovalidateMode: _usernameTouched
                         ? AutovalidateMode.onUserInteraction
                         : AutovalidateMode.disabled,
@@ -194,7 +193,6 @@ class _ValidationScreenState extends State<ValidationScreen> {
                   TextFormField(
                     focusNode: _emailFocus,
                     controller: _emailController,
-                    onChanged: (_) => _updateFormValidity(),
                     autovalidateMode: _emailTouched
                         ? AutovalidateMode.onUserInteraction
                         : AutovalidateMode.disabled,
@@ -209,7 +207,6 @@ class _ValidationScreenState extends State<ValidationScreen> {
                     focusNode: _passwordFocus,
                     controller: _passwordController,
                     obscureText: true,
-                    onChanged: (_) => _updateFormValidity(),
                     autovalidateMode: _passwordTouched
                         ? AutovalidateMode.onUserInteraction
                         : AutovalidateMode.disabled,
@@ -235,7 +232,6 @@ class _ValidationScreenState extends State<ValidationScreen> {
                     focusNode: _repeatPasswordFocus,
                     controller: _repeatPasswordController,
                     obscureText: true,
-                    onChanged: (_) => _updateFormValidity(),
                     autovalidateMode: _repeatPasswordTouched
                         ? AutovalidateMode.onUserInteraction
                         : AutovalidateMode.disabled,
