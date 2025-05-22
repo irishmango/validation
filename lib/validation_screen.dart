@@ -102,19 +102,24 @@ class _ValidationScreenState extends State<ValidationScreen> {
   }
 
   String? validateEmail(String? email) {
-    if (email == null || email.isEmpty) {
-      return "Email is required.";
-    }
-    if (!email.contains('@') || !email.contains('.')) {
-      return "Enter a valid email.";
-    }
-    int atIndex = email.indexOf('@');
-    int dotIndex = email.lastIndexOf('.');
-    if (atIndex <= 0 || dotIndex < atIndex + 2 || dotIndex >= email.length - 1) {
-      return "Enter a valid email.";
-    }
-    return null;
+  if (email == null || email.trim().isEmpty) {
+    return "Email is required.";
   }
+
+  email = email.trim();
+
+  final atIndex = email.indexOf('@');
+  final dotIndex = email.lastIndexOf('.');
+
+  final hasAt = atIndex > 0;
+  final hasDot = dotIndex > atIndex + 1 && dotIndex < email.length - 1;
+
+  if (!hasAt || !hasDot) {
+    return "Enter a valid email.";
+  }
+
+  return null;
+}
 
   String? validatePassword(String? password) {
     if (password == null || password.isEmpty) {
@@ -123,16 +128,16 @@ class _ValidationScreenState extends State<ValidationScreen> {
     if (password.length < 6) {
       return "Must be at least 6 characters.";
     }
-    if (!password.split('').any((c) => numbers.contains(c))) {
+    if (!password.split('').any((t) => numbers.contains(t))) {
       return "Password must contain a number.";
     }
-    if (!password.split('').any((c) => abcLower.contains(c))) {
+    if (!password.split('').any((t) => abcLower.contains(t))) {
       return "Password must contain a lowercase letter.";
     }
-    if (!password.split('').any((c) => abcUpper.contains(c))) {
+    if (!password.split('').any((t) => abcUpper.contains(t))) {
       return "Password must contain an uppercase letter.";
     }
-    if (!password.split('').any((c) => specialChars.contains(c))) {
+    if (!password.split('').any((t) => specialChars.contains(t))) {
       return "Password must contain a special character.";
     }
     return null;
@@ -272,6 +277,12 @@ class _ValidationScreenState extends State<ValidationScreen> {
     );
   }
 }
+
+
+
+
+
+
 
 class PasswordRequirements extends StatelessWidget {
   final String password;
